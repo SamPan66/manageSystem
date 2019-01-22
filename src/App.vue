@@ -4,7 +4,7 @@
       <el-header>
         <el-dropdown>
           <span class="el-dropdown-link">
-            下拉菜单
+            {{userName}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -19,6 +19,7 @@
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
+            @select="handleSelect"
           >
             <el-submenu index="1">
               <template slot="title">
@@ -54,12 +55,56 @@
 </template>
 
 <script>
+import { instance } from './config/common.js';
 export default {
   data() {
-    return {};
+    return {
+
+    };
+  },
+  computed:{
+    userName(){
+      console.log(this.$store.state.userName)
+      return this.$store.state.userName;
+    }
+  },
+  created() {
+    this.login();
   },
   methods: {
+    login() {
+      let $this = this;
+      instance
+        .get("gen/key?tjid=546495")
+        .then(function(response) {
+          console.log(response);
+          $this.dologin(response.data,546495,123456)
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    dologin(obj, username, pass) {
+      console.log(obj)
+      if (obj.code == 1) {
+        //var sessionkey = obj.data.ss;
+        instance
+        .post("login",{ username: username, userpass: pass, publickey: obj.data.ps})
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      } 
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+      this.$store.commit('increment','牛逼大人')
+    },
     handleOpen(key, keyPath) {
+      
+      this.$store.commit('incrementName','人大逼牛')
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
