@@ -1,48 +1,121 @@
 <template>
   <div id="app">
-     <Header>
-        <Menu mode="horizontal" theme="dark" active-name="1" @on-select="MenuSelect">
-          <div class="layout-logo"></div>
-          <div class="layout-nav">
-            <MenuItem name="hello">
-              <Icon type="ios-navigate"></Icon>hello
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>Item 4
-            </MenuItem>
-          </div>
-        </Menu>
-      </Header>
-    
-    <router-view></router-view>
+    <el-container>
+      <el-header>
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            下拉菜单
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+          >
+            <el-submenu index="1">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>站点管理</span>
+              </template>
+              <el-menu-item index="1-1">油站公司管理</el-menu-item>
+              <el-menu-item index="1-2">油站站点管理</el-menu-item>
+              <el-menu-item index="1-3">选项3</el-menu-item>
+              <el-menu-item index="1-4">选项4</el-menu-item>
+            </el-submenu>
+            <el-menu-item index="2">
+              <i class="el-icon-menu"></i>
+              <span slot="title">导航二</span>
+            </el-menu-item>
+            <el-menu-item index="3">
+              <i class="el-icon-document"></i>
+              <span slot="title">导航三</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <i class="el-icon-setting"></i>
+              <span slot="title">导航四</span>
+            </el-menu-item>
+          </el-menu>
+        </el-aside>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+      <el-footer>2011-2016 &copy; TalkingData</el-footer>
+    </el-container>
   </div>
 </template>
 
 <script>
-
 export default {
-  data(){
-    return {
-    }
+  data() {
+    return {};
   },
-  methods:{
-    MenuSelect(){
-      console.log(this.$router)
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     }
   }
-}
+};
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+}
 #app {
   min-width: 1200px;
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   color: #2c3e50;
+}
+.el-header {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+.el-footer {
+  background-color: #f1f1f1;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+}
+
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  text-align: center;
+  line-height: 200px;
+}
+
+.el-main {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  line-height: 160px;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
 }
 </style>
