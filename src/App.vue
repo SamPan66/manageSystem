@@ -2,15 +2,26 @@
   <div id="app">
     <el-container>
       <el-header>
-        <el-dropdown>
-          <span class="el-dropdown-link">
-            {{userName}}
-            <i class="el-icon-arrow-down el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <el-row>
+          <el-col :span="12">
+            <div class="logo-box">
+              <img src="./assets/img/sy.png" alt>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="user-infor">
+              <el-dropdown>
+                <span class="el-dropdown-link">
+                  {{userName}}
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+          </el-col>
+        </el-row>
       </el-header>
       <el-container>
         <el-aside width="200px">
@@ -26,8 +37,8 @@
                 <i class="el-icon-location"></i>
                 <span>站点管理</span>
               </template>
-              <el-menu-item index="1-1">油站公司管理</el-menu-item>
-              <el-menu-item index="1-2">油站站点管理</el-menu-item>
+              <el-menu-item index="OilStationCompany">油站公司管理</el-menu-item>
+              <el-menu-item index="hello">油站站点管理</el-menu-item>
               <el-menu-item index="1-3">选项3</el-menu-item>
               <el-menu-item index="1-4">选项4</el-menu-item>
             </el-submenu>
@@ -55,16 +66,13 @@
 </template>
 
 <script>
-import { instance } from './config/common.js';
+import { instance } from "./config/common.js";
 export default {
   data() {
-    return {
-
-    };
+    return {};
   },
-  computed:{
-    userName(){
-      console.log(this.$store.state.userName)
+  computed: {
+    userName() {
       return this.$store.state.userName;
     }
   },
@@ -78,33 +86,36 @@ export default {
         .get("gen/key?tjid=546495")
         .then(function(response) {
           console.log(response);
-          $this.dologin(response.data,546495,123456)
+          $this.dologin(response.data, 546495, 123456);
         })
         .catch(function(error) {
           console.log(error);
         });
     },
     dologin(obj, username, pass) {
-      console.log(obj)
+      console.log(obj);
       if (obj.code == 1) {
         //var sessionkey = obj.data.ss;
         instance
-        .post("login",{ username: username, userpass: pass, publickey: obj.data.ps})
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      } 
+          .post("login", {
+            username: username,
+            userpass: pass,
+            publickey: obj.data.ps
+          })
+          .then(function(response) {
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
     },
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-      this.$store.commit('increment','牛逼大人')
+    handleSelect(key) {
+      this.$router.push("/" + key);
+      this.$store.commit("increment", "牛逼大人");
     },
     handleOpen(key, keyPath) {
-      
-      this.$store.commit('incrementName','人大逼牛')
+      this.$store.commit("incrementName", "人大逼牛");
       console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
@@ -114,7 +125,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
 body {
   margin: 0;
   padding: 0;
@@ -125,11 +136,25 @@ body {
   color: #2c3e50;
 }
 .el-header {
-  background-color: #b3c0d1;
+  background: #33cc99;
   color: #333;
   text-align: center;
+  padding: 0 !important;
   line-height: 60px;
+  .logo-box {
+    padding-left: 20px;
+    text-align: left;
+    img {
+      vertical-align: middle;
+      line-height: 60px;
+    }
+  }
+  .user-infor {
+    padding-right: 20px;
+    text-align: right;
+  }
 }
+
 .el-footer {
   background-color: #f1f1f1;
   color: #333;
@@ -138,17 +163,36 @@ body {
 }
 
 .el-aside {
-  background-color: #d3dce6;
+  background: #495060;
   color: #333;
   text-align: center;
   line-height: 200px;
+}
+.el-submenu__title {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.7) !important;
+  background: #495060;
+}
+.el-menu-item {
+  text-align: left;
+  color: rgba(255, 255, 255, 0.7) !important;
+  background: #495060;
+}
+.el-submenu__title:hover,
+.el-menu-item:hover,
+.el-menu-item.is-active {
+  color: #fff !important;
+  background: #2d8cf0 !important;
+}
+
+.el-menu {
+  overflow: hidden;
 }
 
 .el-main {
   background-color: #fff;
   color: #333;
   text-align: center;
-  line-height: 160px;
 }
 
 body > .el-container {
