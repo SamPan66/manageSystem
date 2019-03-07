@@ -42,9 +42,9 @@
               <el-menu-item index="1-3">选项3</el-menu-item>
               <el-menu-item index="1-4">选项4</el-menu-item>
             </el-submenu>
-            <el-menu-item index="2">
+            <el-menu-item index="UserSettings">
               <i class="el-icon-menu"></i>
-              <span slot="title">导航二</span>
+              <span slot="title">用户设置</span>
             </el-menu-item>
             <el-menu-item index="3">
               <i class="el-icon-document"></i>
